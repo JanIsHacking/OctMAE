@@ -1,8 +1,8 @@
-#!bin/bash
+#!/bin/bash
 
 if [[ "$2" == "train_tiny" ]] ;then
   mkdir -p $1/train
-  for i in $(seq -f "%06g" 1 10)
+  for i in $(seq -f "%06g" 0 9)
   do
     echo "Downloading train/shard-$i.tar.gz..." 
     aws s3 cp s3://tri-ml-public.s3.amazonaws.com/github/octmae/train/shard-$i.tar.gz $1/train/
@@ -11,7 +11,7 @@ if [[ "$2" == "train_tiny" ]] ;then
   done
 elif [[ "$2" == "train" ]] ;then
   mkdir -p $1/train
-  for i in $(seq -f "%06g" 1 9999)
+  for i in $(seq -f "%06g" 0 9999)
   do
     echo "Downloading train/shard-$i.tar.gz..." 
     aws s3 cp s3://tri-ml-public.s3.amazonaws.com/github/octmae/train/shard-$i.tar.gz $1/train/
@@ -20,15 +20,13 @@ elif [[ "$2" == "train" ]] ;then
   done
 elif [[ "$2" == "eval" ]] ;then
   mkdir -p $1/eval
-  for i in $(seq -f "%06g" 1 9)
+  for i in $(seq -f "%06g" 0 9)
   do
     for datasetName in synth_eval ycb_video hb hope
     do
       mkdir -p $1/eval/${datasetName}
-      echo "Downloading eval/${datasetName}/shard-$i.tar.gz..." 
-      aws s3 cp s3://tri-ml-public.s3.amazonaws.com/github/octmae/eval/${datasetName}/shard-$i.tar.gz $1/eval/${datasetName}
-      echo "Decompressing eval/${datasetName}/shard-$i.tar.gz..." 
-      pigz -d $1/eval/${datasetName}/shard-$i.tar.gz
+      echo "Downloading eval/${datasetName}/shard-$i.tar..." 
+      aws s3 cp s3://tri-ml-public.s3.amazonaws.com/github/octmae/eval/${datasetName}/shard-$i.tar $1/eval/${datasetName}
     done
   done
 else
