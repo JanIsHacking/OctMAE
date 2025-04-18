@@ -10,9 +10,9 @@ from torchmetrics.functional.classification import binary_f1_score, binary_accur
 
 import webdataset as wds
 
-from oct_mae.nets.oct_mae import OctMAE
-from oct_mae.utils.config import parse_config
-from oct_mae.utils.misc import make_sample_wrapper, decode_depth
+from octmae.nets import OctMAE
+from octmae.utils.config import parse_config
+from octmae.utils.misc import make_sample_wrapper, decode_depth
 
 th.set_float32_matmul_precision('medium')
 th.backends.cuda.matmul.allow_tf32 = True
